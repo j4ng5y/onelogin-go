@@ -68,6 +68,7 @@ type Options struct {
 	ClientID       string
 	ClientSecret   string
 	Region         string
+	SubDomain string
 	MaxResults     int
 	DefaultTimeout time.Duration
 }
@@ -82,6 +83,8 @@ func NewWithOptions(opts *Options) (*Client, error) {
 		return nil, fmt.Errorf("Options.ClientSecret must not be blank")
 	case opts.Region == "":
 		return nil, fmt.Errorf("Options.Region must not be blank")
+	case opts.SubDomain == "":
+		return nil, fmt.Errorf("Options.SubDomain must not be blank")
 	case opts.MaxResults == 0:
 		C.Options.MaxResults = 1000
 	case opts.DefaultTimeout == time.Duration(0):
@@ -93,12 +96,14 @@ func NewWithOptions(opts *Options) (*Client, error) {
 	return C, nil
 }
 
-func New(clientID, clientSecret string) (*Client, error) {
+func New(clientID, clientSecret, subDomain string) (*Client, error) {
 	switch {
 	case clientID == "":
 		return nil, fmt.Errorf("clientID must not be blank")
 	case clientSecret == "":
 		return nil, fmt.Errorf("clientSecret must not be blank")
+	case subDomain == "":
+		return nil, fmt.Errorf("subDomain must not be blank")
 	}
 	return &Client{
 		HTTPClient: http.DefaultClient,
@@ -106,6 +111,7 @@ func New(clientID, clientSecret string) (*Client, error) {
 			ClientID:       clientID,
 			ClientSecret:   clientSecret,
 			Region:         "us",
+			SubDomain: subDomain,
 			MaxResults:     1000,
 			DefaultTimeout: time.Duration(60) * time.Second,
 		},
