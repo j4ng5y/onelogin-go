@@ -15,7 +15,7 @@ For examples, please see the [Examples](examples) directory
 | **API**                     | **Status**         | **Examples**       |
 |:----------------------------|:-------------------|:-------------------|
 | Apps                        | :heavy_check_mark: | :x:                |
-| Connectors                  | :x:                | :x:                |
+| Connectors                  | :heavy_check_mark: | :x:                |
 | Custom Login Pages          | :heavy_check_mark: | :x:                |
 | Embed Apps                  | :warning:          | :x:                |
 | Events                      | :warning:          | :x:                |
