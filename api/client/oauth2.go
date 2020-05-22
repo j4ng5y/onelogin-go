@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/j4ng5y/onelogin/api"
+	"github.com/j4ng5y/onelogin-go/api"
 )
 
 type GetAccessTokenRequest struct {

@@ -4,7 +4,7 @@ import (
 	"flag"
 	"log"
 
-	"github.com/j4ng5y/onelogin/api/client"
+	"github.com/j4ng5y/onelogin-go/api/client"
 )
 
 func main() {
