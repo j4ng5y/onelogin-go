@@ -11,21 +11,21 @@ A reimplementation of the Onelogin client library for Go.
 For examples, please see the [Examples](examples) directory
 
 ### TODO:
-| **API**                     | **Status**    |
-|:----------------------------|:--------------|
-| Apps                        | *In Progress* |
-| Connectors                  | Not Started   |
-| Custom Login Pages          | *In Progress* |
-| Embed Apps                  | *In Progress* |
-| Events                      | *In Progress* |
-| Groups                      | *In Progress* |
-| Invites                     | *In Progress* |
-| Multi-Factor Authentication | *In Progress* |
-| OAuth2                      | **Complete**  |
-| Privileges                  | *In Progress* |
-| Roles                       | *In Progress* |
-| SAML                        | **Complete**  |
-| Users                       | *In Progress* |
+| **API**                     | **Status**         |
+|:----------------------------|:-------------------|
+| Apps                        | :warning:          |
+| Connectors                  | :x:                |
+| Custom Login Pages          | :warning:          |
+| Embed Apps                  | :warning:          |
+| Events                      | :warning:          |
+| Groups                      | :warning:          |
+| Invites                     | :warning:          |
+| Multi-Factor Authentication | :warning:          |
+| OAuth2                      | :heavy_check_mark: |
+| Privileges                  | :warning:          |
+| Roles                       | :warning:          |
+| SAML                        | :heavy_check_mark: |
+| Users                       | :warning:          |
 
 ### Disclaimer:
 
