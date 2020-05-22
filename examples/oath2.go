@@ -27,7 +27,7 @@ func OAUTH2Requests(C *client.Client) {
 
 	log.Printf("RegenerateAccessToken: %v\n", RT)
 
-	GRL, err := C.GetRateLimits(RT.AccessToken)
+	GRL, err := C.GetRateLimits(&client.GetRateLimitsRequest{BearerToken: RT.AccessToken})
 	if err != nil {
 		log.Fatal(err)
 	}
