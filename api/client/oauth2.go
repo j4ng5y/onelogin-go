@@ -8,7 +8,7 @@ import (
 	"net/http"
 	"time"
 
-	"granular.ag/onelogin/api"
+	"github.com/j4ng5y/onelogin/api"
 )
 
 type GetAccessTokenRequest struct {
