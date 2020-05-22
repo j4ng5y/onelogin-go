@@ -189,15 +189,13 @@ func (C *Client) RevokeToken(req *RevokeTokenRequest) (*RevokeTokenResponse, err
 	return Resp, nil
 }
 
-type GetRateLimitsResponseData struct {
-	Limit int `json:"X-RateLimit-Limit"`
-	Remaining int `json:"X-RateLimit-Remaining"`
-	Reset int `json:"X-RateLimit-Reset"`
-}
-
 type GetRateLimitsResponse struct {
 	Status ErrorResponse `json:"status"`
-	Data GetRateLimitsResponseData `json:"data"`
+	Data struct {
+		Limit int `json:"X-RateLimit-Limit"`
+		Remaining int `json:"X-RateLimit-Remaining"`
+		Reset int `json:"X-RateLimit-Reset"`
+	} `json:"data"`
 }
 
 func (G *GetRateLimitsResponse) Unmarshal(httpBody io.ReadCloser) error {
