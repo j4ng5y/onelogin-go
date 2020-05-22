@@ -26,6 +26,7 @@ type RequestOptions struct {
 	Method string
 	URL string
 	Body []byte
+	CustomAllowedOriginHeader string
 }
 
 func (C *Client) RequestBuilder(options *RequestOptions) (req *http.Request, err error) {
@@ -54,6 +55,10 @@ func (C *Client) RequestBuilder(options *RequestOptions) (req *http.Request, err
 		req.Header.Set("Authorization", fmt.Sprintf("bearer:%s", options.AccessToken))
 	case false:
 		req.Header.Set("Authorization", fmt.Sprintf("Basic %s", base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%s:%s", C.Options.ClientID, C.Options.ClientSecret)))))
+	}
+
+	if options.CustomAllowedOriginHeader != "" {
+		req.Header.Set("Custom-Allowed-Origin-Header-1", options.CustomAllowedOriginHeader)
 	}
 
 	return req, nil
