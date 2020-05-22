@@ -95,7 +95,7 @@ func (C *Client) CreateSessionLoginToken(req *CreateSessionLoginTokenRequest) (*
 	var Resp = &CreateSessionLoginTokenResponse{}
 	builderOpts := &api.URLBuilderOptions{
 		Region: C.Options.Region,
-		BaseURL: api.URLS["OAUTH2_TOKEN_URLS"]["TOKEN_REVOKE_URL"],
+		BaseURL: api.URLS["CUSTOM_LOGIN_URLS"]["SESSION_LOGIN_TOKEN_URL"],
 	}
 	URL, err := api.URLBuilder(builderOpts)
 	if err != nil {
@@ -132,7 +132,7 @@ func (C *Client) GetSessionTokenWithMFA(req *GetSessionTokenWithMFARequest) (*Ge
 	var Resp = &GetSessionTokenWithMFAResponse{}
 	builderOpts := &api.URLBuilderOptions{
 		Region: C.Options.Region,
-		BaseURL: api.URLS["OAUTH2_TOKEN_URLS"]["TOKEN_REVOKE_URL"],
+		BaseURL: api.URLS["CUSTOM_LOGIN_URLS"]["GET_TOKEN_VERIFY_FACTOR"],
 	}
 	URL, err := api.URLBuilder(builderOpts)
 	if err != nil {
