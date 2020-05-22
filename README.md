@@ -16,7 +16,7 @@ For examples, please see the [Examples](examples) directory
 |:----------------------------|:-------------------|
 | Apps                        | :warning:          |
 | Connectors                  | :x:                |
-| Custom Login Pages          | :warning:          |
+| Custom Login Pages          | :heavy_check_mark: |
 | Embed Apps                  | :warning:          |
 | Events                      | :warning:          |
 | Groups                      | :warning:          |
