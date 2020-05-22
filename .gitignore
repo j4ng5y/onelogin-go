@@ -1,0 +1,11 @@
+# Test Coverage and Profiling
+*.out
+*.prof
+
+# Binaries
+/bin
+
+# IDE Things
+.idea/
+.vscode/
+.DS_Store
