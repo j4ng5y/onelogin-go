@@ -12,7 +12,7 @@ For examples, please see the [Examples](examples) directory
 
 ### TODO:
 | **API**                     | **Status**    |
-|:----------------------------|---------------|
+|:----------------------------|:--------------|
 | Apps                        | *In Progress* |
 | Connectors                  | Not Started   |
 | Custom Login Pages          | *In Progress* |
