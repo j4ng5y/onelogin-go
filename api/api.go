@@ -12,11 +12,85 @@ type URLBuilderOptions struct {
 	ObjectID string
 	ExtraID  string
 	QueryParameters map[string]string
+	SubDomain string
 }
 
 func URLBuilder(opts *URLBuilderOptions) (URL string, err error) {
 	if opts.Region == "" {
-		return "", fmt.Errorf("URLBuildOptions.Region must not be left blank")
+		if opts.SubDomain == "" {
+			return "", fmt.Errorf("one ofURLBuildOptions.Region or URLBuildOptions.SubDomain must be set")
+		} else {
+			if opts.ObjectID != "" {
+				if opts.ExtraID != "" {
+					if len(opts.QueryParameters) != 0 {
+						base, err := url.Parse(opts.BaseURL)
+						if err != nil {
+							return "", nil
+						}
+						for k, v := range opts.QueryParameters {
+							base.Query().Set(k, v)
+						}
+						return fmt.Sprintf(base.String(), opts.SubDomain, opts.ObjectID, opts.ExtraID), err
+					} else {
+						return fmt.Sprintf(opts.BaseURL, opts.SubDomain, opts.ObjectID, opts.ExtraID), err
+					}
+				} else {
+					if len(opts.QueryParameters) != 0 {
+						base, err := url.Parse(opts.BaseURL)
+						if err != nil {
+							return "", nil
+						}
+						for k, v := range opts.QueryParameters {
+							base.Query().Set(k, v)
+						}
+						return fmt.Sprintf(base.String(), opts.SubDomain, opts.ObjectID), err
+					} else {
+						return fmt.Sprintf(opts.BaseURL, opts.SubDomain, opts.ObjectID), err
+					}
+				}
+			}
+			if opts.ExtraID != "" {
+				if opts.ObjectID != "" {
+					if len(opts.QueryParameters) != 0 {
+						base, err := url.Parse(opts.BaseURL)
+						if err != nil {
+							return "", nil
+						}
+						for k, v := range opts.QueryParameters {
+							base.Query().Set(k, v)
+						}
+						return fmt.Sprintf(base.String(), opts.SubDomain, opts.ObjectID, opts.ExtraID), err
+					} else {
+						return fmt.Sprintf(opts.BaseURL, opts.SubDomain, opts.ObjectID, opts.ExtraID), err
+					}
+				} else {
+					if len(opts.QueryParameters) != 0 {
+						base, err := url.Parse(opts.BaseURL)
+						if err != nil {
+							return "", nil
+						}
+						for k, v := range opts.QueryParameters {
+							base.Query().Set(k, v)
+						}
+						return fmt.Sprintf(base.String(), opts.SubDomain, opts.ExtraID), err
+					} else {
+						return fmt.Sprintf(opts.BaseURL, opts.SubDomain, opts.ExtraID), err
+					}
+				}
+			}
+			if len(opts.QueryParameters) != 0 {
+				base, err := url.Parse(opts.BaseURL)
+				if err != nil {
+					return "", nil
+				}
+				for k, v := range opts.QueryParameters {
+					base.Query().Set(k, v)
+				}
+				return fmt.Sprintf(base.String(), opts.Region), err
+			} else {
+				return fmt.Sprintf(opts.BaseURL, opts.Region), err
+			}
+		}
 	} else {
 		if opts.ObjectID != "" {
 			if opts.ExtraID != "" {
