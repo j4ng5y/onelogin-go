@@ -189,6 +189,10 @@ func (C *Client) RevokeToken(req *RevokeTokenRequest) (*RevokeTokenResponse, err
 	return Resp, nil
 }
 
+type GetRateLimitsRequest struct {
+	BearerToken string
+}
+
 type GetRateLimitsResponse struct {
 	Status ErrorResponse `json:"status"`
 	Data struct {
@@ -207,7 +211,7 @@ func (G *GetRateLimitsResponse) Unmarshal(httpBody io.ReadCloser) error {
 	return json.Unmarshal(body, G)
 }
 
-func (C *Client) GetRateLimits(token string) (*GetRateLimitsResponse, error) {
+func (C *Client) GetRateLimits(req *GetRateLimitsRequest) (*GetRateLimitsResponse, error) {
 	var Resp = &GetRateLimitsResponse{}
 	builderOpts := &api.URLBuilderOptions{
 		Region: C.Options.Region,
@@ -222,7 +226,7 @@ func (C *Client) GetRateLimits(token string) (*GetRateLimitsResponse, error) {
 		Method: http.MethodGet,
 		URL: URL,
 		Bearer: true,
-		AccessToken: token,
+		AccessToken: req.BearerToken,
 	})
 	if err != nil {
 		return nil, fmt.Errorf("error bulding request: %v", err)
