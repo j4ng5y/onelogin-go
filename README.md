@@ -11,6 +11,7 @@ A reimplementation of the Onelogin client library for Go.
 For examples, please see the [Examples](examples) directory
 
 ### TODO:
+
 | **API**                     | **Status**         |
 |:----------------------------|:-------------------|
 | Apps                        | :warning:          |
