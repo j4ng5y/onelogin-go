@@ -17,7 +17,7 @@ For examples, please see the [Examples](examples) directory
 | Apps                        | :heavy_check_mark: | :x:                |
 | Connectors                  | :heavy_check_mark: | :x:                |
 | Custom Login Pages          | :heavy_check_mark: | :x:                |
-| Embed Apps                  | :warning:          | :x:                |
+| Embed Apps                  | :heavy_check_mark: | :x:                |
 | Events                      | :warning:          | :x:                |
 | Groups                      | :warning:          | :x:                |
 | Invites                     | :warning:          | :x:                |
