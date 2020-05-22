@@ -13,7 +13,7 @@ For examples, please see the [Examples](examples) directory
 ### TODO:
 
 | **API**                     | **Status**         | **Examples**       |
-|:----------------------------|:-------------------| -------------------|
+|:----------------------------|:-------------------|:-------------------|
 | Apps                        | :heavy_check_mark: | :x:                |
 | Connectors                  | :x:                | :x:                |
 | Custom Login Pages          | :heavy_check_mark: | :x:                |
