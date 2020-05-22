@@ -12,21 +12,21 @@ For examples, please see the [Examples](examples) directory
 
 ### TODO:
 
-| **API**                     | **Status**         |
-|:----------------------------|:-------------------|
-| Apps                        | :warning:          |
-| Connectors                  | :x:                |
-| Custom Login Pages          | :heavy_check_mark: |
-| Embed Apps                  | :warning:          |
-| Events                      | :warning:          |
-| Groups                      | :warning:          |
-| Invites                     | :warning:          |
-| Multi-Factor Authentication | :warning:          |
-| OAuth2                      | :heavy_check_mark: |
-| Privileges                  | :warning:          |
-| Roles                       | :warning:          |
-| SAML                        | :heavy_check_mark: |
-| Users                       | :warning:          |
+| **API**                     | **Status**         | **Examples**       |
+|:----------------------------|:-------------------| -------------------|
+| Apps                        | :heavy_check_mark: | :x:                |
+| Connectors                  | :x:                | :x:                |
+| Custom Login Pages          | :heavy_check_mark: | :x:                |
+| Embed Apps                  | :warning:          | :x:                |
+| Events                      | :warning:          | :x:                |
+| Groups                      | :warning:          | :x:                |
+| Invites                     | :warning:          | :x:                |
+| Multi-Factor Authentication | :warning:          | :x:                |
+| OAuth2                      | :heavy_check_mark: | :heavy_check_mark: |
+| Privileges                  | :warning:          | :x:                |
+| Roles                       | :warning:          | :x:                |
+| SAML                        | :heavy_check_mark: | :x:                |
+| Users                       | :warning:          | :x:                |
 
 ### Disclaimer:
 
