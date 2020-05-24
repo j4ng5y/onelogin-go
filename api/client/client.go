@@ -1,11 +1,14 @@
 package client
 
+import "C"
 import (
 	"bytes"
 	"encoding/base64"
 	"fmt"
 	"net/http"
 	"time"
+
+	"github.com/j4ng5y/onelogin-go/api/session"
 )
 
 type ErrorResponse struct {
@@ -16,6 +19,7 @@ type ErrorResponse struct {
 }
 
 type Client struct {
+	Session *session.Session
 	Options *Options
 	HTTPClient *http.Client
 }
@@ -54,7 +58,7 @@ func (C *Client) RequestBuilder(options *RequestOptions) (req *http.Request, err
 		}
 		req.Header.Set("Authorization", fmt.Sprintf("bearer:%s", options.AccessToken))
 	case false:
-		req.Header.Set("Authorization", fmt.Sprintf("Basic %s", base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%s:%s", C.Options.ClientID, C.Options.ClientSecret)))))
+		req.Header.Set("Authorization", fmt.Sprintf("Basic %s", base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%s:%s", C.Session.ClientID, C.Session.ClientSecret)))))
 	}
 
 	if options.CustomAllowedOriginHeader != "" {
@@ -65,24 +69,13 @@ func (C *Client) RequestBuilder(options *RequestOptions) (req *http.Request, err
 }
 
 type Options struct {
-	ClientID       string
-	ClientSecret   string
-	Region         string
 	SubDomain string
 	MaxResults     int
 	DefaultTimeout time.Duration
 }
 
-func NewWithOptions(opts *Options) (*Client, error) {
-	C := &Client{}
-
+func NewWithOptions(sess *session.Session, opts *Options) (*Client, error) {
 	switch {
-	case opts.ClientID == "":
-		return nil, fmt.Errorf("Options.ClientID must not be blank")
-	case opts.ClientSecret == "":
-		return nil, fmt.Errorf("Options.ClientSecret must not be blank")
-	case opts.Region == "":
-		return nil, fmt.Errorf("Options.Region must not be blank")
 	case opts.SubDomain == "":
 		return nil, fmt.Errorf("Options.SubDomain must not be blank")
 	case opts.MaxResults == 0:
@@ -91,26 +84,22 @@ func NewWithOptions(opts *Options) (*Client, error) {
 		C.Options.DefaultTimeout = time.Duration(60) * time.Second
 	}
 
-	C.Options = opts
-	C.HTTPClient = http.DefaultClient
-	return C, nil
+	return &Client{
+		Session: sess,
+		Options: opts,
+		HTTPClient: http.DefaultClient,
+	}, nil
 }
 
-func New(clientID, clientSecret, subDomain string) (*Client, error) {
+func New(sess *session.Session, subDomain string) (*Client, error) {
 	switch {
-	case clientID == "":
-		return nil, fmt.Errorf("clientID must not be blank")
-	case clientSecret == "":
-		return nil, fmt.Errorf("clientSecret must not be blank")
 	case subDomain == "":
 		return nil, fmt.Errorf("subDomain must not be blank")
 	}
 	return &Client{
+		Session: sess,
 		HTTPClient: http.DefaultClient,
 		Options: &Options{
-			ClientID:       clientID,
-			ClientSecret:   clientSecret,
-			Region:         "us",
 			SubDomain: subDomain,
 			MaxResults:     1000,
 			DefaultTimeout: time.Duration(60) * time.Second,
