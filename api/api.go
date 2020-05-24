@@ -3,10 +3,12 @@ package api
 import (
 	"fmt"
 	"net/url"
+
+	"github.com/j4ng5y/onelogin-go/api/session"
 )
 
 type URLBuilderOptions struct {
-	Region string
+	Region session.Region
 	// BaseURL can be retrieved by getting a value from the "URLS" map
 	BaseURL  string
 	ObjectID string

@@ -69,7 +69,7 @@ func (G *GetAppsResponse) Unmarshal(httpBody io.ReadCloser) error {
 func (C *Client) GetApps(req *GetAppsRequest) (*GetAppsResponse, error) {
 	var Resp = &GetAppsResponse{}
 	builderOpts := &api.URLBuilderOptions{
-		Region: C.Options.Region,
+		Region: C.Session.Region,
 		BaseURL: api.URLS["APPS_URLS"]["GET_APPS_URLS"],
 	}
 	URL, err := api.URLBuilder(builderOpts)

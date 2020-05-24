@@ -67,7 +67,7 @@ func (G *GetSAMLAssertionWithMFAResponse) Unmarshal(httpBody io.ReadCloser) erro
 func (C *Client) GetSAMLAssertion(req *GetSAMLAssertionRequest) (*GetSAMLAssertionResponse, error) {
 	var Resp = &GetSAMLAssertionResponse{}
 	builderOpts := &api.URLBuilderOptions{
-		Region: C.Options.Region,
+		Region: C.Session.Region,
 		BaseURL: api.URLS["OAUTH2_TOKEN_URLS"]["TOKEN_REVOKE_URL"],
 	}
 	URL, err := api.URLBuilder(builderOpts)
@@ -103,7 +103,7 @@ func (C *Client) GetSAMLAssertion(req *GetSAMLAssertionRequest) (*GetSAMLAsserti
 func (C *Client) GetSAMLAssertionWithMFA(req *GetSAMLAssertionWithMFARequest) (*GetSAMLAssertionWithMFAResponse, error) {
 	var Resp = &GetSAMLAssertionWithMFAResponse{}
 	builderOpts := &api.URLBuilderOptions{
-		Region: C.Options.Region,
+		Region: C.Session.Region,
 		BaseURL: api.URLS["OAUTH2_TOKEN_URLS"]["GET_SAML_VERIFY_FACTOR"],
 	}
 	URL, err := api.URLBuilder(builderOpts)

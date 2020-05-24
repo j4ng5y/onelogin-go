@@ -41,7 +41,7 @@ func (G *GetAccessTokenResponse) Unmarshal(httpBody io.ReadCloser) error {
 func (C *Client) GetAccessToken(req *GetAccessTokenRequest) (*GetAccessTokenResponse, error) {
 	var Resp = &GetAccessTokenResponse{}
 	builderOpts := &api.URLBuilderOptions{
-		Region: C.Options.Region,
+		Region: C.Session.Region,
 		BaseURL: api.URLS["OAUTH2_TOKEN_URLS"]["TOKEN_REQUEST_URL"],
 	}
 	URL, err := api.URLBuilder(builderOpts)
@@ -103,7 +103,7 @@ func (R *RegenerateTokenResponse) Unmarshal(httpBody io.ReadCloser) error {
 func (C *Client) RegenerateToken(req *RegenerateTokenRequest) (*RegenerateTokenResponse, error) {
 	var Resp = &RegenerateTokenResponse{}
 	builderOpts := &api.URLBuilderOptions{
-		Region: C.Options.Region,
+		Region: C.Session.Region,
 		BaseURL: api.URLS["OAUTH2_TOKEN_URLS"]["TOKEN_REQUEST_URL"],
 	}
 	URL, err := api.URLBuilder(builderOpts)
@@ -158,7 +158,7 @@ func (R *RevokeTokenResponse) Unmarshal(httpBody io.ReadCloser) error {
 func (C *Client) RevokeToken(req *RevokeTokenRequest) (*RevokeTokenResponse, error) {
 	var Resp = &RevokeTokenResponse{}
 	builderOpts := &api.URLBuilderOptions{
-		Region: C.Options.Region,
+		Region: C.Session.Region,
 		BaseURL: api.URLS["OAUTH2_TOKEN_URLS"]["TOKEN_REVOKE_URL"],
 	}
 	URL, err := api.URLBuilder(builderOpts)
@@ -214,7 +214,7 @@ func (G *GetRateLimitsResponse) Unmarshal(httpBody io.ReadCloser) error {
 func (C *Client) GetRateLimits(req *GetRateLimitsRequest) (*GetRateLimitsResponse, error) {
 	var Resp = &GetRateLimitsResponse{}
 	builderOpts := &api.URLBuilderOptions{
-		Region: C.Options.Region,
+		Region: C.Session.Region,
 		BaseURL: api.URLS["OAUTH2_TOKEN_URLS"]["GET_RATE_URL"],
 	}
 	URL, err := api.URLBuilder(builderOpts)

@@ -56,7 +56,7 @@ func (L *ListConnectorsResponse) Unmarshal(httpBody io.ReadCloser) error {
 func (C *Client) ListConnectors(req *ListConnectorsRequest) (*ListConnectorsResponse, error) {
 	var Resp = &ListConnectorsResponse{}
 	builderOpts := &api.URLBuilderOptions{
-		Region: C.Options.Region,
+		Region: C.Session.Region,
 		BaseURL: api.URLS["OAUTH2_TOKEN_URLS"]["GET_RATE_URL"],
 		QueryParameters: map[string]string{
 			"name": req.Name,

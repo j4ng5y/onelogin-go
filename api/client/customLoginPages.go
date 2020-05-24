@@ -94,7 +94,7 @@ func (G *GetSessionTokenWithMFAResponse) Unmarshal(httpBody io.ReadCloser) error
 func (C *Client) CreateSessionLoginToken(req *CreateSessionLoginTokenRequest) (*CreateSessionLoginTokenResponse, error) {
 	var Resp = &CreateSessionLoginTokenResponse{}
 	builderOpts := &api.URLBuilderOptions{
-		Region: C.Options.Region,
+		Region: C.Session.Region,
 		BaseURL: api.URLS["CUSTOM_LOGIN_URLS"]["SESSION_LOGIN_TOKEN_URL"],
 	}
 	URL, err := api.URLBuilder(builderOpts)
@@ -131,7 +131,7 @@ func (C *Client) CreateSessionLoginToken(req *CreateSessionLoginTokenRequest) (*
 func (C *Client) GetSessionTokenWithMFA(req *GetSessionTokenWithMFARequest) (*GetSessionTokenWithMFAResponse, error) {
 	var Resp = &GetSessionTokenWithMFAResponse{}
 	builderOpts := &api.URLBuilderOptions{
-		Region: C.Options.Region,
+		Region: C.Session.Region,
 		BaseURL: api.URLS["CUSTOM_LOGIN_URLS"]["GET_TOKEN_VERIFY_FACTOR"],
 	}
 	URL, err := api.URLBuilder(builderOpts)
