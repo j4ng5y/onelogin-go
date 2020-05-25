@@ -43,6 +43,7 @@ type GetEventsRequest struct {
 		UserID string
 	}
 }
+
 type GetEventsResponse struct {
 	Status ErrorResponse `json:"status"`
 	Pagination struct {
@@ -85,12 +86,74 @@ type GetEventsResponse struct {
 		ProxyIP string `json:"proxy_ip"`
 		RiskScore int `json:"risk_score"`
 		RiskReasons string `json:"risk_reasons"`
-		RistCookieID int `json:"risk_cookie_id"`
-		BrowserFingerprint string `json:"brower_fingerprint"`
+		RiskCookieID int `json:"risk_cookie_id"`
+		BrowserFingerprint string `json:"browser_fingerprint"`
 	} `json:"data"`
 }
-type GetEventRequest struct {}
-type GetEventResponse struct {}
+
+func (G *GetEventsResponse) Unmarshal(httpBody io.ReadCloser) error {
+	body, err := ioutil.ReadAll(httpBody)
+	if err != nil {
+		return err
+	}
+
+	return json.Unmarshal(body, G)
+}
+
+type GetEventRequest struct {
+	BearerToken string
+	EventID string
+}
+type GetEventResponse struct {
+	Status ErrorResponse `json:"status"`
+	Data []struct{
+		ID int `json:"id"`
+		CreatedAt time.Time `json:"created_at"`
+		AccountID int `json:"account_id"`
+		UserID int `json:"user_id"`
+		EventTypeID int `json:"event_type_id"`
+		Notes string `json:"notes"`
+		IPAddr string `json:"ipaddr"`
+		ActorUserID int `json:"actor_user_id"`
+		AssumingActorUserID int `json:"assuming_actor_user_id"`
+		RoleID int `json:"role_id"`
+		AppID int `json:"app_id"`
+		GroupID int `json:"group_id"`
+		OTPDeviceID int `json:"otp_device_id"`
+		PolicyID int `json:"policy_id"`
+		ActorSystem string `json:"actor_system"`
+		CustomMessage string `json:"custom_message"`
+		RoleName string `json:"role_name"`
+		AppName string `json:"app_name"`
+		GroupName string `json:"group_name"`
+		ActorUserName string `json:"actor_user_name"`
+		UserName string `json:"user_name"`
+		PolicyName string `json:"policy_name"`
+		OTPDeviceName string `json:"otp_device_name"`
+		OperationName string `json:"operation_name"`
+		DirectorySyncRunID int `json:"directory_sync_run_id"`
+		DirectoryID int `json:"directory_id"`
+		Resolution string `json:"resolution"`
+		ClientID int `json:"client_id"`
+		ResourceTypeID int `json:"resource_type_id"`
+		ErrorDescription string `json:"error_description"`
+		ProxyIP string `json:"proxy_ip"`
+		RiskScore int `json:"risk_score"`
+		RiskReasons string `json:"risk_reasons"`
+		RiskCookieID int `json:"risk_cookie_id"`
+		BrowserFingerprint string `json:"browser_fingerprint"`
+	} `json:"data"`
+}
+
+func (G *GetEventResponse) Unmarshal(httpBody io.ReadCloser) error {
+	body, err := ioutil.ReadAll(httpBody)
+	if err != nil {
+		return err
+	}
+
+	return json.Unmarshal(body, G)
+}
+
 type CreateEventRequest struct {}
 type CreateEventResponse struct {}
 
@@ -121,7 +184,7 @@ func (C *Client) GetEvents(req *GetEventsRequest) (*GetEventsResponse, error) {
 	var Resp = &GetEventsResponse{}
 	builderOpts := &api.URLBuilderOptions{
 		Region: C.Session.Region,
-		BaseURL: api.URLS["OAUTH2_TOKEN_URLS"]["GET_RATE_URL"],
+		BaseURL: api.URLS["EVENT_URLS"]["GET_EVENTS_URL"],
 		QueryParameters: map[string]string{
 			"client_id": req.QueryParameters.ClientID,
 			"created_at": req.QueryParameters.CreatedAt,
@@ -161,10 +224,11 @@ func (C *Client) GetEvents(req *GetEventsRequest) (*GetEventsResponse, error) {
 }
 
 func (C *Client) GetEvent(req *GetEventRequest) (*GetEventResponse, error) {
-	var Resp = &GetRateLimitsResponse{}
+	var Resp = &GetEventResponse{}
 	builderOpts := &api.URLBuilderOptions{
 		Region: C.Session.Region,
-		BaseURL: api.URLS["OAUTH2_TOKEN_URLS"]["GET_RATE_URL"],
+		ObjectID: req.EventID,
+		BaseURL: api.URLS["EVENT_URLS"]["GET_EVENT_URL"],
 	}
 	URL, err := api.URLBuilder(builderOpts)
 	if err != nil {
@@ -192,4 +256,6 @@ func (C *Client) GetEvent(req *GetEventRequest) (*GetEventResponse, error) {
 	return Resp, nil
 }
 
-func (C *Client) CreateEvent(req *CreateEventRequest) (*CreateEventResponse, error) {}
+func (C *Client) CreateEvent(req *CreateEventRequest) (*CreateEventResponse, error) {
+	return nil, fmt.Errorf("unimplimented")
+}
