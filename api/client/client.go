@@ -3,7 +3,6 @@ package client
 import "C"
 import (
 	"bytes"
-	"encoding/base64"
 	"fmt"
 	"net/http"
 	"time"
@@ -24,48 +23,85 @@ type Client struct {
 	HTTPClient *http.Client
 }
 
-type RequestOptions struct {
+type GETRequestOptions struct {
 	Bearer bool
 	AccessToken string
-	Method string
+	URL string
+	CustomAllowedOriginHeader string
+}
+
+type POSTRequestOptions struct {
+	AccessToken string
 	URL string
 	Body []byte
 	CustomAllowedOriginHeader string
 }
 
-func (C *Client) RequestBuilder(options *RequestOptions) (req *http.Request, err error) {
-	switch options.Method {
-	case http.MethodGet:
-		req, err = http.NewRequest(options.Method, options.URL, nil)
-		if err != nil {
-			return nil, fmt.Errorf("error creating request: %v", err)
+func (C *Client) AuthenticatedGETRequestBuilder(options *GETRequestOptions) (*http.Request, error) {
+	if !options.Bearer {
+		return nil, fmt.Errorf("GETRequestOptions.Bearer is set to 'false', consider using Client.UnauthenticatedGETRequestBuilder instead")
+	} else {
+		if options.AccessToken == "" {
+			return nil, fmt.Errorf("GETRequestOptions.AccessToken is required when GETRequestOptions.Bearer is set to 'true'")
 		}
-	case http.MethodPost:
-		req, err = http.NewRequest(options.Method, options.URL, bytes.NewBuffer(options.Body))
-		if err != nil {
-			return nil, fmt.Errorf("error creating request: %v", err)
-		}
-	default:
-		return nil, fmt.Errorf("unsuppored method %s", options.Method)
+	}
+
+	req, err := http.NewRequest(http.MethodGet, options.URL, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request due to error: %+v", err)
 	}
 
 	req.Header.Set("Content-Type", "application/json")
-
-	switch options.Bearer {
-	case true:
-		if options.AccessToken == "" {
-			return nil, fmt.Errorf("RequestOptions.AccessToken can not be blank")
-		}
-		req.Header.Set("Authorization", fmt.Sprintf("bearer:%s", options.AccessToken))
-	case false:
-		req.Header.Set("Authorization", fmt.Sprintf("Basic %s", base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%s:%s", C.Session.ClientID, C.Session.ClientSecret)))))
-	}
+	req.Header.Set("Authorization", fmt.Sprintf("bearer:%s", options.AccessToken))
 
 	if options.CustomAllowedOriginHeader != "" {
 		req.Header.Set("Custom-Allowed-Origin-Header-1", options.CustomAllowedOriginHeader)
 	}
 
-	return req, nil
+	return req, err
+}
+
+func (C *Client) UnauthenticatedGETRequestBuilder(options *GETRequestOptions) (*http.Request, error) {
+	if options.Bearer {
+		return nil, fmt.Errorf("GETRequestOptions.Bearer is set to 'true', consider using Client.AuthenticatedGETRequestBuilder instead")
+	} else {
+		if options.AccessToken != "" {
+			return nil, fmt.Errorf("GETRequestOptions.AccessToken is not empty, consider using Client.AuthenticatedGETRequestBuilder instead")
+		}
+	}
+
+	req, err := http.NewRequest(http.MethodGet, options.URL, nil)
+	if err != nil {
+		return nil, fmt.Errorf("error creating request due to error: %+v", err)
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+
+	if options.CustomAllowedOriginHeader != "" {
+		req.Header.Set("Custom-Allowed-Origin-Header-1", options.CustomAllowedOriginHeader)
+	}
+
+	return req, err
+}
+
+func (C *Client) AuthenticatedPOSTRequestBuilder(options *POSTRequestOptions) (*http.Request, error) {
+	if options.AccessToken == "" {
+		return nil, fmt.Errorf("POSTRequestOptions.AccessToken is required")
+	}
+
+	req, err := http.NewRequest(http.MethodPost, options.URL, bytes.NewBuffer(options.Body))
+	if err != nil {
+		return nil, fmt.Errorf("error creating request due to error: %+v", err)
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", fmt.Sprintf("bearer:%s", options.AccessToken))
+
+	if options.CustomAllowedOriginHeader != "" {
+		req.Header.Set("Custom-Allowed-Origin-Header-1", options.CustomAllowedOriginHeader)
+	}
+
+	return req, err
 }
 
 type Options struct {

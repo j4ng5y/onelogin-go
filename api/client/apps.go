@@ -5,23 +5,22 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
-	"net/http"
 	"time"
 
 	"github.com/j4ng5y/onelogin-go/api"
 )
 
-type GetAppsRequest struct {
+type GetAppRequest struct {
 	BearerToken string
 	//ID is the ID of the app that you want to return
 	ID int `json:"id"`
 }
 
-func (G *GetAppsRequest) Marshal() ([]byte, error) {
+func (G *GetAppRequest) Marshal() ([]byte, error) {
 	return json.Marshal(G)
 }
 
-type GetAppsResponse struct {
+type GetAppResponse struct {
 	ID int `json:"id"`
 	Name string `json:"string"`
 	Visible bool `json:"visible"`
@@ -57,7 +56,7 @@ type GetAppsResponse struct {
 	Parameters map[string]map[string]interface{} `json:"parameters"`
 }
 
-func (G *GetAppsResponse) Unmarshal(httpBody io.ReadCloser) error {
+func (G *GetAppResponse) Unmarshal(httpBody io.ReadCloser) error {
 	body, err := ioutil.ReadAll(httpBody)
 	if err != nil {
 		return err
@@ -66,11 +65,29 @@ func (G *GetAppsResponse) Unmarshal(httpBody io.ReadCloser) error {
 	return json.Unmarshal(body, G)
 }
 
-func (C *Client) GetApps(req *GetAppsRequest) (*GetAppsResponse, error) {
-	var Resp = &GetAppsResponse{}
+type GetAppsRequest struct {}
+type GetAppsResponse struct {}
+
+type CreateAppRequest struct {}
+type CreateAppResponse struct {}
+
+type UpdateAppRequest struct {}
+type UpdateAppResponse struct {}
+
+type DeleteAppParameterRequest struct {}
+type DeleteAppParameterResponse struct {}
+
+type DeleteAppRequest struct {}
+type DeleteAppResponse struct {}
+
+type GetAppUsersRequest struct {}
+type GetAppUsersResponse struct {}
+
+func (C *Client) GetApps(req *GetAppRequest) (*GetAppResponse, error) {
+	var Resp = &GetAppResponse{}
 	builderOpts := &api.URLBuilderOptions{
 		Region: C.Session.Region,
-		BaseURL: api.URLS["APPS_URLS"]["GET_APPS_URLS"],
+		BaseURL: api.URLS["APPS_URLS"]["GET_APP_URLS"],
 	}
 	URL, err := api.URLBuilder(builderOpts)
 	if err != nil {
@@ -80,10 +97,9 @@ func (C *Client) GetApps(req *GetAppsRequest) (*GetAppsResponse, error) {
 	if err != nil {
 		return nil, fmt.Errorf("error marshaling request: %v", err)
 	}
-	httpReq, err := C.RequestBuilder(&RequestOptions{
-		Method: http.MethodPost,
+	httpReq, err := C.AuthenticatedGETRequestBuilder(&GETRequestOptions{
+		AccessToken: req.BearerToken,
 		URL: URL,
-		Body: b,
 	})
 	if err != nil {
 		return nil, fmt.Errorf("error bulding request: %v", err)

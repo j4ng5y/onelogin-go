@@ -74,6 +74,8 @@ func (C *Client) GenerateInviteLink(req *GenerateInviteLinkRequest) (*GenerateIn
 		Method: http.MethodPost,
 		URL: URL,
 		Body: b,
+		Bearer: true,
+		AccessToken: req.BearerToken,
 	})
 	if err != nil {
 		return nil, fmt.Errorf("error bulding request: %v", err)
@@ -108,6 +110,8 @@ func (C *Client) SendInviteLink(req *SendInviteLinkRequest) (*SendInviteLinkResp
 		Method: http.MethodPost,
 		URL: URL,
 		Body: b,
+		Bearer: true,
+		AccessToken: req.BearerToken,
 	})
 	if err != nil {
 		return nil, fmt.Errorf("error bulding request: %v", err)
