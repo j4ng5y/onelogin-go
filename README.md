@@ -25,8 +25,10 @@ For examples, please see the [Examples](examples) directory
 | OAuth2                      | :heavy_check_mark: | :heavy_check_mark: |
 | Privileges                  | :warning:          | :x:                |
 | Roles                       | :warning:          | :x:                |
-| SAML                        | :heavy_check_mark: | :x:                |
+| SAML Assertions             | :heavy_check_mark: | :x:                |
 | Users                       | :warning:          | :x:                |
+| User Mappings               | :warning:          | :x:                |
+| API Authorization           | :warning:          | :x:                |
 
 ### Disclaimer:
 
