@@ -20,7 +20,7 @@ For examples, please see the [Examples](examples) directory
 | Embed Apps                  | :heavy_check_mark: | :x:                |
 | Events                      | :heavy_check_mark: | :x:                |
 | Groups                      | :heavy_check_mark: | :x:                |
-| Invites                     | :warning:          | :x:                |
+| Invites                     | :heavy_check_mark: | :x:                |
 | Multi-Factor Authentication | :warning:          | :x:                |
 | OAuth2                      | :heavy_check_mark: | :heavy_check_mark: |
 | Privileges                  | :warning:          | :x:                |
